@@ -1,17 +1,18 @@
 import './App.css';
-
-import Cards from './Cards';
+import Card from './Card';
 
 function App() {
 
-  const cards = [{ title: 'first', text: 'firstText' }, { title: 'secondTitle', text: 'secondText' }, { title: 'thirdTitle', text: 'thirdText' },
-  { title: 'fourthTitle', text: 'fourthText' }, { title: 'fifthTitle', text: 'fifthText' }, { title: 'sixthTitle', text: 'sixthText' }]
+  const cards = [{ title: 'first', author: 'firstText' }, { title: 'secondTitle', author: 'secondauthor' }, { title: 'thirdTitle', author: 'thirdauthor' },
+  { title: 'fourthTitle', author: 'fourthauthor' }, { title: 'fifthTitle', author: 'fifthauthor' }, { title: 'sixthTitle', author: 'sixthauthor' }, { title: 'first', author: 'firstauthor' }, { title: 'secondTitle', author: 'secondauthor' }, { title: 'thirdTitle', author: 'thirdauthor' },
+  { title: 'fourthTitle', author: 'fourthauthor' }, { title: 'fifthTitle', author: 'fifthauthor' }, { title: 'sixthTitle', author: 'sixthauthor' }]
 
   return (
-    <div className="App">
-
-      <h2>{cards.map(() => <Cards /> )}</h2>
-      
+    <div className="container">
+      <div className="row">
+        {cards.map((card) => <Card card={card} /> )}
+        
+      </div>
     </div>
   );
 }
