@@ -10,7 +10,7 @@ function Main() {
     { 
       query: "",
       search: "All", 
-      time: {id: "all", value: "All time"}, //todo: change to object key, value
+      time: {id: "all", value: "All time"},
       order: "Date"
     })
 
@@ -33,12 +33,15 @@ function Main() {
   }
 
   const searchFilterChanged = ({target}) => {
-    console.log(target.id);
-    console.log(target.innerText);
     setSearchObject((prev) => (
       { 
         ...prev,
-        [target.attributes.name.nodeValue]: target.id === ""? target.innerText : {id: target.id ,value: target.innerText }
+        [target.attributes.name.nodeValue]: 
+          target.id === ""? 
+            target.innerText : 
+            {
+              id: target.id ,value: target.innerText 
+            }
       }
     ));
   }
