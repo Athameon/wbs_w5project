@@ -38,14 +38,14 @@ export default (props) => {
             </li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {props.searchObject.time}
+              {props.searchObject.time.value}
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time">All time</div></li>
-                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time">Last 24h</div></li>
-                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time">Past Week</div></li>
-                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time">Past Month</div></li>
-                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time">Past Year</div></li>
+                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time" id="all">All time</div></li>
+                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time" id="day">Last 24h</div></li>
+                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time" id="week">Past Week</div></li>
+                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time" id="month">Past Month</div></li>
+                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time" id="year">Past Year</div></li>
               </ul>
             </li>
           </ul>
