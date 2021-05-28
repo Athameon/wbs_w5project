@@ -1,19 +1,15 @@
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap'
 import Card from './Card';
 
-function App() {
-
-  const cards = [{ title: 'first', author: 'firstText' }, { title: 'secondTitle', author: 'secondauthor' }, { title: 'thirdTitle', author: 'thirdauthor' },
-  { title: 'fourthTitle', author: 'fourthauthor' }, { title: 'fifthTitle', author: 'fifthauthor' }, { title: 'sixthTitle', author: 'sixthauthor' }, { title: 'first', author: 'firstauthor' }, { title: 'secondTitle', author: 'secondauthor' }, { title: 'thirdTitle', author: 'thirdauthor' },
-  { title: 'fourthTitle', author: 'fourthauthor' }, { title: 'fifthTitle', author: 'fifthauthor' }, { title: 'sixthTitle', author: 'sixthauthor' }]
+function App({searchResult}) {
+  if (searchResult === undefined) { // In case the result is not loaded yet
+    return <div></div>
+  }
 
   return (
     <div className="container">
       <div className="row">
-        {cards.map((card) => <Card card={card} /> )}
-        
+        {searchResult.hits.map((card) => <Card card={card} /> )}
       </div>
     </div>
   );

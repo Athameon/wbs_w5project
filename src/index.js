@@ -1,6 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap'
 import App from './App';
 import Header from './Header'
 import Footer from './Footer'
@@ -101,7 +103,7 @@ function Main() {
         inputFilterQuerySet={inputFilterQuerySet}
         searchObject={searchObject}
         setSearchFilter={searchFilterChanged}/>
-      <App />
+      <App searchResult={searchResult} />
       <Footer />
     </>
   )}

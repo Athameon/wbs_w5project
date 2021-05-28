@@ -1,6 +1,4 @@
 import React, {useState} from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap'
 
 export default (props) => {
   const [searchInput, setSearchInput] = useState("");
