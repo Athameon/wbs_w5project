@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -6,26 +6,47 @@ import Header from './Header'
 import Footer from './Footer'
 
 function Main() {
-  // const [searchInput, setSearchInput] = useState("");
-  // useEffect(() => {
-  //   console.log("Fetch new data")
-  // }, [searchInput])
-  // useState search + filter
-  // useEffect -> fetch
+  const [searchObject, setSearchObject] = useState(
+    { 
+      query: "",
+      search: "All", 
+      time: "All time", //todo: change to object key, value
+      order: "Date"
+    })
 
-  //searchMethod(keyWord) { }
-  const onSearchInputChange = ({target}) => {
-    // setSearchInput(target.value);
-    console.log(target.value);
+  useEffect(() => {
+    performFetch();
+  }, [searchObject])
+
+  const performFetch = () => {
+    console.log("Fetch new data", searchObject)
   }
-  const finishSearching = () => {
+
+  const inputFilterQuerySet = (searchQueryValue) => {
     console.log("Finished Searching");
+    setSearchObject((prev) => (
+      {
+        ...prev,
+        query: searchQueryValue
+      }
+    ))
+  }
+
+  const searchFilterChanged = ({target}) => {
+    setSearchObject((prev) => (
+      { 
+      ...prev,
+      [target.attributes.name.nodeValue]: target.innerText 
+      }
+    ));
   }
 
   return (
     <>
-      <Header onSearchInputChange={onSearchInputChange} 
-        finishSearching={finishSearching}/>
+      <Header
+        inputFilterQuerySet={inputFilterQuerySet}
+        searchObject={searchObject}
+        setSearchFilter={searchFilterChanged}/>
       <App />
       <Footer />
     </>

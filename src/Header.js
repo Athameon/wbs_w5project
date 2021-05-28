@@ -1,9 +1,13 @@
-import React from 'react'
-// import 'bootstrap'
+import React, {useState} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export default (props) => {
+  const [searchInput, setSearchInput] = useState("");
+  const onSearchInputChange = ({target}) => {
+    setSearchInput(target.value)
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -13,30 +17,41 @@ export default (props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
+          <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {props.searchObject.search}
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li onClick={(event) => props.setSearchFilter(event)} ><div className="dropdown-item" name="search">All</div></li>
+                <li onClick={(event) => props.setSearchFilter(event)} ><div className="dropdown-item" name="search">Stories</div></li>
+                <li onClick={(event) => props.setSearchFilter(event)} ><div className="dropdown-item" name="search">Comments</div></li>
+              </ul>
             </li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
+              {props.searchObject.order}
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a className="dropdown-item" href="#">Action</a></li>
-                <li><a className="dropdown-item" href="#">Another action</a></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="order">Date</div></li>
+                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="order">Popularity</div></li>
               </ul>
             </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {props.searchObject.time}
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time">All time</div></li>
+                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time">Last 24h</div></li>
+                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time">Past Week</div></li>
+                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time">Past Month</div></li>
+                <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time">Past Year</div></li>
+              </ul>
             </li>
           </ul>
-          <form className="d-flex" onSubmit={(event) => {event && event.preventDefault(); props.finishSearching()}}>
+          <form className="d-flex" onSubmit={(event) => {event && event.preventDefault(); props.inputFilterQuerySet(searchInput)}}>
             <input 
-            onChange={(event) => props.onSearchInputChange(event)} 
+            onChange={(event) => onSearchInputChange(event)} 
             className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
             <button className="btn btn-outline-success" type="submit">Search</button>
           </form>
