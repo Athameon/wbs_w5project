@@ -1,15 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Header from './Header'
 import Footer from './Footer'
 
+function Main() {
+  const [searchObject, setSearchObject] = useState(
+    { 
+      query: "",
+      search: "All", 
+      time: {id: "all", value: "All time"},
+      order: "Date"
+    })
+
+  useEffect(() => {
+    performFetch();
+  }, [searchObject])
+
+  const performFetch = () => {
+    console.log("Fetch new data", searchObject)
+  }
+
+  const inputFilterQuerySet = (searchQueryValue) => {
+    console.log("Finished Searching");
+    setSearchObject((prev) => (
+      {
+        ...prev,
+        query: searchQueryValue
+      }
+    ))
+  }
+
+  const searchFilterChanged = ({target}) => {
+    setSearchObject((prev) => (
+      { 
+        ...prev,
+        [target.attributes.name.nodeValue]: 
+          target.id === ""? 
+            target.innerText : 
+            {
+              id: target.id ,value: target.innerText 
+            }
+      }
+    ));
+  }
+
+  return (
+    <>
+      <Header
+        inputFilterQuerySet={inputFilterQuerySet}
+        searchObject={searchObject}
+        setSearchFilter={searchFilterChanged}/>
+      <App />
+      <Footer />
+    </>
+  )}
+
 ReactDOM.render(
   <React.StrictMode>
-    <Header />
-    <App />
-    <Footer />
+    <Main />
   </React.StrictMode>,
   document.getElementById('root')
 );
