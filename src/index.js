@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import Header from './Header'
 import Footer from './Footer'
+import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
