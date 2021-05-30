@@ -1,6 +1,4 @@
 import React, {useState} from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap'
 
 export default (props) => {
   const [searchInput, setSearchInput] = useState("");
@@ -18,9 +16,9 @@ export default (props) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {props.searchObject.search}
-              </a>
+              </div>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li onClick={(event) => props.setSearchFilter(event)} ><div className="dropdown-item" name="search">All</div></li>
                 <li onClick={(event) => props.setSearchFilter(event)} ><div className="dropdown-item" name="search">Stories</div></li>
@@ -28,18 +26,18 @@ export default (props) => {
               </ul>
             </li>
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {props.searchObject.order}
-              </a>
+              </div>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="order">Date</div></li>
                 <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="order">Popularity</div></li>
               </ul>
             </li>
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {props.searchObject.time.value}
-              </a>
+              </div>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time" id="all">All time</div></li>
                 <li onClick={(event) => props.setSearchFilter(event)}><div className="dropdown-item" name="time" id="day">Last 24h</div></li>

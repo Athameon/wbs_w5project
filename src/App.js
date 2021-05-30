@@ -1,19 +1,22 @@
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap'
 import Card from './Card';
 
-function App() {
+function App({searchResult}) {
 
-  const cards = [{ title: 'first', author: 'firstText' }, { title: 'secondTitle', author: 'secondauthor' }, { title: 'thirdTitle', author: 'thirdauthor' },
-  { title: 'fourthTitle', author: 'fourthauthor' }, { title: 'fifthTitle', author: 'fifthauthor' }, { title: 'sixthTitle', author: 'sixthauthor' }, { title: 'first', author: 'firstauthor' }, { title: 'secondTitle', author: 'secondauthor' }, { title: 'thirdTitle', author: 'thirdauthor' },
-  { title: 'fourthTitle', author: 'fourthauthor' }, { title: 'fifthTitle', author: 'fifthauthor' }, { title: 'sixthTitle', author: 'sixthauthor' }]
+  if (searchResult === undefined) { // In case the result is not loaded yet
+    return <div></div>
+  }
+
+  searchResult.hits = searchResult.hits.sort(function(a,b){
+    // Turn your strings into dates, and then subtract them
+    // to get a value that is either negative, positive, or zero.
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
 
   return (
     <div className="container">
       <div className="row">
-        {cards.map((card) => <Card card={card} /> )}
-        
+        {searchResult.hits.map((card) => <Card key={card.objectID} card={card} /> )}
       </div>
     </div>
   );
