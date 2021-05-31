@@ -6,6 +6,8 @@ import 'bootstrap'
 import App from './App';
 import Header from './Header'
 import Footer from './Footer'
+import LoadingComponent from './LoadingComponent'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const updateIntervalInMinutes = 10;
 
@@ -19,6 +21,8 @@ function Main() {
       order: "Date"
     })
   const [searchResult, setSearchResult] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     performFetch();
@@ -40,6 +44,7 @@ function Main() {
     performFethRequest(composeApiRequest(searchObject));
   }
   const performFethRequest = (address) => {
+    setIsLoading(true);
     fetch(address)
       .then(response => {
         if (response.ok) {
@@ -47,31 +52,20 @@ function Main() {
         }
         throw new Error('Request was too stupid!');
       }, networkError => {
-        console.log(networkError.message);
+        throw new Error('Network Error: ' + networkError)
       })
       .then(jsonResponse => {
         console.log(jsonResponse);
         setSearchResult(jsonResponse);
+        setIsLoading(false);
       })
       .catch(error => {
         console.log(error);
+        setIsLoading(false);
       });
   }
 
-  const getTimeRange = (time) => {
-    switch(time.id) {
-      case "day":
-        return 24*60*60;
-      case "week":
-        return 7*24*60*60;
-      case "month":
-        return 31*24*60*60;
-      case "year":
-        return 365*24*60*60;
-      default: 
-        return "";
-    }
-  }
+
 
   const inputFilterQuerySet = (searchQueryValue) => {
     console.log("Finished Searching");
@@ -103,30 +97,46 @@ function Main() {
         inputFilterQuerySet={inputFilterQuerySet}
         searchObject={searchObject}
         setSearchFilter={searchFilterChanged}/>
-      <App searchResult={searchResult} />
+      {isLoading? <LoadingComponent /> :
+        <App searchResult={searchResult} />}
       <Footer />
     </>
   )
 
-function composeApiRequest(searchObject) {
-  let address = searchObject.order === "Date" ?
-    addressingApi + "search_by_date?" :
-    addressingApi + "search?";
-  console.log(searchObject.search);
-  if (searchObject.search === "Stories") {
-    address += 'tags=story&';
-  } else if (searchObject.search === "Comments") {
-    address += 'tags=comment&';
+  function composeApiRequest(searchObject) {
+    let address = searchObject.order === "Date" ?
+      addressingApi + "search_by_date?" :
+      addressingApi + "search?";
+    console.log(searchObject.search);
+    if (searchObject.search === "Stories") {
+      address += 'tags=story&';
+    } else if (searchObject.search === "Comments") {
+      address += 'tags=comment&';
+    }
+    if (searchObject.time.id !== 'all') {
+      address += "numericFilters=created_at_i>" + getTimeRange(searchObject.time) + '&';
+    }
+    if (searchObject.query !== '') {
+      address += "query=" + searchObject.query;
+    }
+    console.log('Search api address is: ', address);
+    return address;
   }
-  if (searchObject.time.id !== 'all') {
-    address += "numericFilters=created_at_i>" + getTimeRange(searchObject.time) + '&';
+
+  function getTimeRange(time) {
+    switch(time.id) {
+      case "day":
+        return 24*60*60;
+      case "week":
+        return 7*24*60*60;
+      case "month":
+        return 31*24*60*60;
+      case "year":
+        return 365*24*60*60;
+      default: 
+        return "";
+    }
   }
-  if (searchObject.query !== '') {
-    address += "query=" + searchObject.query;
-  }
-  console.log('Search api address is: ', address);
-  return address;
-}
 }
 
 ReactDOM.render(
