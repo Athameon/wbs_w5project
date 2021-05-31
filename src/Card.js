@@ -3,7 +3,7 @@ import "./index.js"
 
 export default ({card}) => {
   return (
-    <div className="card col-l" style={{width: '28rem'}}>
+    <div className="card col-l" style={{width: '50%'}}>
         <div className="card-body ">
           <h5 className="card-title">{card.title? card.title : card.comment_text}</h5>
           <p className="card-text">{card.author}</p>
