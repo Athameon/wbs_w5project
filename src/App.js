@@ -14,8 +14,8 @@ function App({searchResult}) {
   });
 
   return (
-    <div className="container">
-      <div className="row">
+    <div className="container" style={{maxWidth: '90%'}}>
+      <div className="row" >
         {searchResult.hits.map((card) => <Card key={card.objectID} card={card} /> )}
       </div>
     </div>

@@ -7,6 +7,8 @@ import App from './App';
 import Header from './Header'
 import Footer from './Footer'
 
+const updateIntervalInMinutes = 10;
+
 function Main() {
   const addressingApi = "http://hn.algolia.com/api/v1/"
   const [searchObject, setSearchObject] = useState(
@@ -22,42 +24,40 @@ function Main() {
     performFetch();
   }, [searchObject])
 
+  useEffect(() => {
+    console.log(`Started fetch update interval with a data check every ${updateIntervalInMinutes} minute(s).`);
+    const intervalId = setInterval(()=> {
+      console.log("Fetch data with update interval");
+      performFetch();
+    }, updateIntervalInMinutes * 60 * 1000);
+    return () => {
+      clearInterval(intervalId);
+    }
+  }, [searchObject])
+
   const performFetch = () => {
     console.log("Fetch new data with search object: ", searchObject);
-    let address = searchObject.order === "Date"?
-      addressingApi + "search_by_date?" : 
-      addressingApi + "search?";
-    console.log(searchObject.search)
-    if(searchObject.search === "Stories") {
-      address += 'tags=story&';
-    } else if (searchObject.search === "Comments") {
-      address += 'tags=comment&';
-    }
-    if (searchObject.time.id !== 'all') {
-      address += "numericFilters=created_at_i>" + getTimeRange(searchObject.time)+'&';
-    }
-    if (searchObject.query !== '') {
-      address += "query=" + searchObject.query;
-    }
-    console.log('searchAdress: ', address);
-
-    fetch(address)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error('Request was too stupid!');
-    }, networkError => {
-      console.log(networkError.message);
-    })
-    .then(jsonResponse => {
-      console.log(jsonResponse);
-      setSearchResult(jsonResponse);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    performFethRequest(composeApiRequest(searchObject));
   }
+  const performFethRequest = (address) => {
+    fetch(address)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Request was too stupid!');
+      }, networkError => {
+        console.log(networkError.message);
+      })
+      .then(jsonResponse => {
+        console.log(jsonResponse);
+        setSearchResult(jsonResponse);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   const getTimeRange = (time) => {
     switch(time.id) {
       case "day":
@@ -106,7 +106,28 @@ function Main() {
       <App searchResult={searchResult} />
       <Footer />
     </>
-  )}
+  )
+
+function composeApiRequest(searchObject) {
+  let address = searchObject.order === "Date" ?
+    addressingApi + "search_by_date?" :
+    addressingApi + "search?";
+  console.log(searchObject.search);
+  if (searchObject.search === "Stories") {
+    address += 'tags=story&';
+  } else if (searchObject.search === "Comments") {
+    address += 'tags=comment&';
+  }
+  if (searchObject.time.id !== 'all') {
+    address += "numericFilters=created_at_i>" + getTimeRange(searchObject.time) + '&';
+  }
+  if (searchObject.query !== '') {
+    address += "query=" + searchObject.query;
+  }
+  console.log('Search api address is: ', address);
+  return address;
+}
+}
 
 ReactDOM.render(
   <React.StrictMode>
