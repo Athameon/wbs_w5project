@@ -6,6 +6,8 @@ import 'bootstrap'
 import App from './App';
 import Header from './Header'
 import Footer from './Footer'
+import LoadingComponent from './LoadingComponent'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const updateIntervalInMinutes = 10;
 
@@ -19,7 +21,6 @@ function Main() {
       order: "Date"
     })
   const [searchResult, setSearchResult] = useState();
-  //Display a spinner or a loading message when the news are being fetched -> Loading...
   const [isLoading, setIsLoading] = useState(true);
 
 
@@ -96,7 +97,7 @@ function Main() {
         inputFilterQuerySet={inputFilterQuerySet}
         searchObject={searchObject}
         setSearchFilter={searchFilterChanged}/>
-      {isLoading? <p>Loading...</p> :
+      {isLoading? <LoadingComponent /> :
         <App searchResult={searchResult} />}
       <Footer />
     </>
