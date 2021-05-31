@@ -8,6 +8,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import LoadingComponent from "./LoadingComponent";
 import Error from "./Error";
+import Empty from "./Empty";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const updateIntervalInMinutes = 10;
@@ -104,6 +105,8 @@ function Main() {
         <LoadingComponent />
       ) : isError ? (
         <Error />
+      ) : searchResult.hits.length === 0 ? (
+        <Empty />
       ) : (
         <App searchResult={searchResult} />
       )}
