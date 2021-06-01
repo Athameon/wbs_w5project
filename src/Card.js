@@ -4,7 +4,7 @@ import "./Card.css";
 
 const Card = ({ card }) => {
   return (
-    <div className="card col-l" id="cardbody" /*style={{ width: "50%", margin: "10px 10px" }}*/>
+    <div className="card col-l">
       <div className="card-body ">
         <a href={card.url} target="_blank" rel="noreferrer" className="card-title">
           {card.title ? card.title : card.comment_text}
