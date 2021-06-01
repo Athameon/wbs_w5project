@@ -11,10 +11,10 @@ import Error from "./Error";
 import Empty from "./Empty";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-const updateIntervalInMinutes = 5;
+const updateIntervalInMinutes = process.env.REACT_APP_UPDATE_INTERVAL_MINUTES;
+const addressingApi = process.env.REACT_APP_API_ADDRESS;
 
 function Main() {
-  const addressingApi = "http://hn.algolia.com/api/v1/";
   const [searchObject, setSearchObject] = useState({
     query: "",
     search: "All",
