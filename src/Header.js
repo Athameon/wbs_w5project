@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default (props) => {
+const Header = (props) => {
   const [searchInput, setSearchInput] = useState("");
   const onSearchInputChange = ({ target }) => {
     setSearchInput(target.value);
@@ -136,3 +136,6 @@ export default (props) => {
     </nav>
   );
 };
+
+
+export default Header;

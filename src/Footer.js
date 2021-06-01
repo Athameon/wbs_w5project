@@ -1,7 +1,7 @@
 import React from 'react'
 import './Footer.css'
 
-export default (props) => {
+const Footer = (props) => {
   const activePage = props.searchObject.page;
   const pagesArray = [];
   if (props.searchResult) {
@@ -14,14 +14,13 @@ export default (props) => {
     }
   }
 
-  function setPage(page) {
-    console.log(page)
-  }
-    return (
-      <div>
-        <nav className='navBar'>
-          {!props.isLoading && props.searchResult && props.searchResult.hits.length !== 0 && pagesArray}
-        </nav>
-      </div>
-    )
+  return (
+    <div>
+      <nav className='navBar'>
+        {!props.isLoading && props.searchResult && props.searchResult.hits.length !== 0 && pagesArray}
+      </nav>
+    </div>
+  )
 }
+
+export default Footer;
