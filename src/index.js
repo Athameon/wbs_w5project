@@ -11,7 +11,7 @@ import Error from "./Error";
 import Empty from "./Empty";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-const updateIntervalInMinutes = 10;
+const updateIntervalInMinutes = 5;
 
 function Main() {
   const addressingApi = "http://hn.algolia.com/api/v1/";
@@ -20,6 +20,7 @@ function Main() {
     search: "All",
     time: { id: "all", value: "All time" },
     order: "Date",
+    page: 0
   });
   const [searchResult, setSearchResult] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -94,25 +95,13 @@ function Main() {
     }));
   };
 
-  return (
-    <>
-      <Header
-        inputFilterQuerySet={inputFilterQuerySet}
-        searchObject={searchObject}
-        setSearchFilter={searchFilterChanged}
-      />
-      {isLoading ? (
-        <LoadingComponent />
-      ) : isError ? (
-        <Error />
-      ) : searchResult.hits.length === 0 ? (
-        <Empty />
-      ) : (
-        <App searchResult={searchResult} />
-      )}
-      <Footer />
-    </>
-  );
+  const setPage = (page) => {
+    console.log("Set page: " + page);
+    setSearchObject((prev) => ({
+      ...prev,
+      page: page - 1,
+    }));
+  }
 
   function composeApiRequest(searchObject) {
     let address =
@@ -130,8 +119,9 @@ function Main() {
         "numericFilters=created_at_i>" + getTimeRange(searchObject.time) + "&";
     }
     if (searchObject.query !== "") {
-      address += "query=" + searchObject.query;
+      address += "query=" + searchObject.query + "&";
     }
+    address += "page=" +searchObject.page;
     console.log("Search api address is: ", address);
     return address;
   }
@@ -150,6 +140,30 @@ function Main() {
         return "";
     }
   }
+
+  return (
+    <>
+      <Header
+        inputFilterQuerySet={inputFilterQuerySet}
+        searchObject={searchObject}
+        setSearchFilter={searchFilterChanged}
+      />
+      {isLoading ? (
+        <LoadingComponent />
+      ) : isError ? (
+        <Error />
+      ) : searchResult && searchResult.hits.length === 0 ? (
+        <Empty />
+      ) : (
+        <App searchResult={searchResult} />
+      )}
+      <Footer 
+        setPage={setPage}
+        searchObject={searchObject}
+        searchResult={searchResult}
+        isLoading={isLoading} />
+    </>
+  );
 }
 
 ReactDOM.render(

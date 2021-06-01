@@ -1,7 +1,27 @@
 import React from 'react'
+import './Footer.css'
 
-export default () => {
-  return (
-    <h2>Footer</h2>
-  )
+export default (props) => {
+  const activePage = props.searchObject.page;
+  const pagesArray = [];
+  if (props.searchResult) {
+    for (let i = 1; i < props.searchResult.nbPages + 1; i++) {
+      if(i === activePage + 1) {
+        pagesArray.push(<span key={i} className='active'>{i}</span>);
+      } else {
+        pagesArray.push(<span key={i} className='navElement' onClick={() => props.setPage(i)}>{i}</span>);
+      }
+    }
+  }
+
+  function setPage(page) {
+    console.log(page)
+  }
+    return (
+      <div>
+        <nav className='navBar'>
+          {!props.isLoading && props.searchResult && props.searchResult.hits.length !== 0 && pagesArray}
+        </nav>
+      </div>
+    )
 }
