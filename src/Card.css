@@ -6,3 +6,9 @@ a {
 .card-title {
   font-size: 1.2rem;
 }
+.card-body {
+ margin: 10px 10px;
+}
+.card { 
+  width: 50%;
+}

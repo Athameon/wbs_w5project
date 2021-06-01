@@ -1,6 +1,7 @@
 .navBar {
   margin: 10px auto;
   text-align: center;
+  padding: 20px;
 }
 .navElement {
   display: inline-block;

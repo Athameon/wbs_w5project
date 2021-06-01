@@ -9,7 +9,7 @@ const Header = (props) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <div className="navbar-brand">Navbar</div>
+        <div className="navbar-brand">Filter</div>
         <button
           className="navbar-toggler"
           type="button"
