@@ -1,0 +1,26 @@
+.navBar {
+  margin: 10px auto;
+  text-align: center;
+}
+.navElement {
+  display: inline-block;
+  min-width: 30px;
+  text-align: center;
+  cursor: pointer;
+  padding: 5px;
+  border: 1px solid lightgray;
+  margin: 0 2px;
+}
+.navElement:hover {
+  color: lightgray;
+}
+.active {
+  display: inline-block;
+  min-width: 30px;
+  text-align: center;
+  cursor: default;
+  padding: 5px;
+  border: 1px solid black;
+  background-color: lightgray;
+  margin: 0 2px;
+}
