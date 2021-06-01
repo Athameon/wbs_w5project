@@ -18,8 +18,8 @@ const Footer = (props) => {
       <nav className='navBar'>
         {!props.isLoading && props.searchResult && props.searchResult.hits.length !== 0 && pagesArray}
       </nav>
-      <div className="footer-copyright text-center py-3">© 2021 Copyright:
-        <a> Ben Joachim Jugesh Jonas</a>
+      <div className="footer-copyright text-center py-3">
+        © 2021 Copyright: Ben Joachim Jugesh Jonas
       </div>    
     </footer>
   )
