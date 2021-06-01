@@ -27,8 +27,8 @@ function Main() {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    performFetch();
-  }, [searchObject]);
+    performFetch()
+  }, [searchObject]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     console.log(
@@ -41,7 +41,7 @@ function Main() {
     return () => {
       clearInterval(intervalId);
     };
-  }, [searchObject]);
+  }, [searchObject]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const performFetch = () => {
     console.log("Fetch new data with search object: ", searchObject);
@@ -74,6 +74,29 @@ function Main() {
       });
   };
 
+  const composeApiRequest = (searchObject) => {
+    let address =
+      searchObject.order === "Date"
+        ? addressingApi + "search_by_date?"
+        : addressingApi + "search?";
+    console.log(searchObject.search);
+    if (searchObject.search === "Stories") {
+      address += "tags=story&";
+    } else if (searchObject.search === "Comments") {
+      address += "tags=comment&";
+    }
+    if (searchObject.time.id !== "all") {
+      address +=
+        "numericFilters=created_at_i>" + getTimeRange(searchObject.time) + "&";
+    }
+    if (searchObject.query !== "") {
+      address += "query=" + searchObject.query + "&restrictSearchableAttributes=title&";
+    }
+    address += "page=" +searchObject.page;
+    console.log("Search api address is: ", address);
+    return address;
+  }
+
   const inputFilterQuerySet = (searchQueryValue) => {
     console.log("Finished Searching");
     setSearchObject((prev) => ({
@@ -103,28 +126,6 @@ function Main() {
     }));
   }
 
-  function composeApiRequest(searchObject) {
-    let address =
-      searchObject.order === "Date"
-        ? addressingApi + "search_by_date?"
-        : addressingApi + "search?";
-    console.log(searchObject.search);
-    if (searchObject.search === "Stories") {
-      address += "tags=story&";
-    } else if (searchObject.search === "Comments") {
-      address += "tags=comment&";
-    }
-    if (searchObject.time.id !== "all") {
-      address +=
-        "numericFilters=created_at_i>" + getTimeRange(searchObject.time) + "&";
-    }
-    if (searchObject.query !== "") {
-      address += "query=" + searchObject.query + "&";
-    }
-    address += "page=" +searchObject.page;
-    console.log("Search api address is: ", address);
-    return address;
-  }
 
   function getTimeRange(time) {
     switch (time.id) {
