@@ -152,7 +152,7 @@ function Main() {
         <LoadingComponent />
       ) : isError ? (
         <Error />
-      ) : searchResult.hits.length === 0 ? (
+      ) : searchResult && searchResult.hits.length === 0 ? (
         <Empty />
       ) : (
         <App searchResult={searchResult} />
