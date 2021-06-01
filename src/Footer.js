@@ -13,13 +13,15 @@ const Footer = (props) => {
       }
     }
   }
-
   return (
-    <div>
+    <footer className="page-footer font-small blue bg-light">
       <nav className='navBar'>
         {!props.isLoading && props.searchResult && props.searchResult.hits.length !== 0 && pagesArray}
       </nav>
-    </div>
+      <div className="footer-copyright text-center py-3">© 2021 Copyright:
+        <a> Ben Joachim Jugesh Jonas</a>
+      </div>    
+    </footer>
   )
 }
 
