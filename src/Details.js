@@ -56,7 +56,8 @@ const Details = (props) => {
           <p>This story has no comments.</p>
         ) : (
           searchResult.hits.map(comment => {
-            return <div key={comment.created_at}> 
+            console.log("comment: ", comment);
+            return <div key={comment.objectID}> 
                 <p>{comment.comment_text}</p> 
                 <p>
                   <span style={{paddingRight: '10px'}}>{comment.author}</span>

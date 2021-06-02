@@ -21,16 +21,16 @@ function App({ searchResult }) {
     return new Date(b.created_at) - new Date(a.created_at);
   });
 
-  const clickedStoryOrComment = (card, isStory) => {
+  const clickedStoryOrComment = (selectedItem, isStory) => {
     setisError(false);
     setisLoading(true);
     if (isStory) {
-      setCurrentStory(card);
+      setCurrentStory(selectedItem);
       setisLoading(false);
     } else {  // If the user clicked on a comment
-      let storyId = card.story_id;
+      let storyId = selectedItem.story_id;
       if (storyId === null) {
-        storyId = getStoryId(card.parent_id);
+        storyId = getStoryId(selectedItem.parent_id);
       }
       console.log("Story ID of selected comment is: " + storyId);
       if (!storyId) {
@@ -105,7 +105,6 @@ function App({ searchResult }) {
       </div>
     );
   }
-
 }
 
 export default App;
