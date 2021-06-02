@@ -1,6 +1,7 @@
 import React from "react";
 import "./index.js";
 import "./Card.css";
+import parse from 'html-react-parser';
 
 const Card = (prop) => {
   return (
@@ -10,7 +11,7 @@ const Card = (prop) => {
         onClick={() => prop.clickedStory(prop.card, prop.card.title !== null)}
           className="card-title"
         >
-          {prop.card.title ? prop.card.title : prop.card.comment_text}
+          {parse(prop.card.title ? prop.card.title : prop.card.comment_text)}
         </div>
         <p className="card-text">
           {new Date(prop.card.created_at).toLocaleString()}

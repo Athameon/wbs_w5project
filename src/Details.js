@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import Error from "./Error";
 import LoadingComponent from "./LoadingComponent";
-import './Details.css'
+import './Details.css';
+import parse from 'html-react-parser';
 
 const Details = (props) => {
   console.log("Show details for: ", props.story)
@@ -44,7 +45,7 @@ const Details = (props) => {
         rel="noreferrer"
         className="card-title"
       >
-        {props.story.title}
+        {parse(props.story.title)}
       </a>
       <p>By <span className='strong'>{props.story.author}</span> at <span className='strong'>{new Date(props.story.created_at).toLocaleString()}</span></p>
       <h2>Comments:</h2>
@@ -58,7 +59,7 @@ const Details = (props) => {
           searchResult.hits.map(comment => {
             // console.log("comment: ", comment);
             return <div key={comment.objectID}> 
-                <p>{comment.comment_text}</p> 
+                <p>{parse(comment.comment_text)}</p> 
                 <p>
                   <span style={{paddingRight: '10px'}}>{comment.author}</span>
                   |
