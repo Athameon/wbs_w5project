@@ -21,7 +21,7 @@ function App({ searchResult, selectedStory }) {
     return new Date(b.created_at) - new Date(a.created_at);
   });
 
-  const clickedStoryOrComment = (selectedItem, isStory) => {
+  const clickedStoryOrComment = async (selectedItem, isStory) => {
     selectedStory(true);
     setisError(false);
     setisLoading(true);
@@ -31,7 +31,7 @@ function App({ searchResult, selectedStory }) {
     } else {  // If the user clicked on a comment
       let storyId = selectedItem.story_id;
       if (storyId === null) {
-        storyId = getStoryId(selectedItem.parent_id);
+        storyId = await getStoryId(selectedItem.parent_id);
       }
       console.log("Story ID of selected comment is: " + storyId);
       if (!storyId) {
