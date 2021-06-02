@@ -8,10 +8,10 @@ const Card = (prop) => {
     <div className="card col-l">
       <div className="card-body ">
         <div
-        onClick={() => prop.clickedStory(prop.card, prop.card.title !== null)}
-          className="card-title"
+          onClick={() => prop.clickedStory(prop.card, prop.card.title !== null)}
+            className="card-title"
         >
-          {parse(prop.card.title ? prop.card.title : prop.card.comment_text)}
+          {parse(prop.card.title ? prop.card.title + "" : prop.card.comment_text + "")}
         </div>
         <p className="card-text">
           {new Date(prop.card.created_at).toLocaleString()}
