@@ -25,6 +25,7 @@ function Main() {
   const [searchResult, setSearchResult] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [storyDisplayed , setStoryDisplayed] = useState(false);
 
   useEffect(() => {
     performFetch()
@@ -34,8 +35,16 @@ function Main() {
     console.log(
       `Started fetch update interval with a data check every ${updateIntervalInMinutes} minute(s).`
     );
+
     const intervalId = setInterval(() => {
       console.log("Fetch data with update interval");
+
+      console.log("Value in storedDisplayed: " , storyDisplayed);
+      if (storyDisplayed) {
+        console.log('Skipped update due story detail is displayed.');
+        return;
+      }
+      
       performFetch();
     }, updateIntervalInMinutes * 60 * 1000);
     return () => {
@@ -126,6 +135,10 @@ function Main() {
     }));
   }
 
+  const selectedStory = (storySelected) => {
+    console.log("Called selectedStory with value: " + storySelected);
+    setStoryDisplayed(storySelected);
+  }
 
   function getTimeRange(time) {
     switch (time.id) {
@@ -156,7 +169,7 @@ function Main() {
       ) : searchResult && searchResult.hits.length === 0 ? (
         <Empty />
       ) : (
-        <App searchResult={searchResult} />
+        <App searchResult={searchResult} selectedStory={selectedStory} />
       )}
       <Footer 
         setPage={setPage}

@@ -2,24 +2,22 @@ import React from "react";
 import "./index.js";
 import "./Card.css";
 
-const Card = ({ card }) => {
+const Card = (prop) => {
   return (
     <div className="card col-l">
       <div className="card-body ">
-        <a
-          href={card.url}
-          target="_blank"
-          rel="noreferrer"
+        <div
+        onClick={() => prop.clickedStory(prop.card, prop.card.title !== null)}
           className="card-title"
         >
-          {card.title ? card.title : card.comment_text}
-        </a>
+          {prop.card.title ? prop.card.title : prop.card.comment_text}
+        </div>
         <p className="card-text">
-          {new Date(card.created_at).toLocaleString()}
+          {new Date(prop.card.created_at).toLocaleString()}
         </p>
         <p>
-          {card.points ? card.points : 0} Points | {card.author} |{" "}
-          {card.num_comments ? card.num_comments : 0} comments
+          {prop.card.points ? prop.card.points : 0} Points | {prop.card.author} |{" "}
+          {prop.card.num_comments ? prop.card.num_comments : 0} comments
         </p>
         <p>{}</p>
       </div>
