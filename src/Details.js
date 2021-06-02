@@ -45,7 +45,7 @@ const Details = (props) => {
         rel="noreferrer"
         className="card-title"
       >
-        {parse(props.story.title)}
+        {parse(props.story.title +  "")}
       </a>
       <p>By <span className='strong'>{props.story.author}</span> at <span className='strong'>{new Date(props.story.created_at).toLocaleString()}</span></p>
       <h2>Comments:</h2>
