@@ -33,7 +33,7 @@ const Details = (props) => {
       setIsLoading(false);
       setIsError(true);
     });
-  }, [])  // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props.story.objectID])
 
   return (
     <div className='detailsBody'>

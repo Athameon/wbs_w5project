@@ -29,7 +29,7 @@ function Main() {
 
   useEffect(() => {
     performFetch()
-  }, [searchObject]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [searchObject]);
 
   useEffect(() => {
     console.log(
@@ -39,7 +39,6 @@ function Main() {
     const intervalId = setInterval(() => {
       console.log("Fetch data with update interval");
 
-      console.log("Value in storedDisplayed: " , storyDisplayed);
       if (storyDisplayed) {
         console.log('Skipped update due story detail is displayed.');
         return;
@@ -50,7 +49,7 @@ function Main() {
     return () => {
       clearInterval(intervalId);
     };
-  }, [searchObject]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [searchObject, storyDisplayed]);
 
   const performFetch = () => {
     console.log("Fetch new data with search object: ", searchObject);
@@ -136,7 +135,6 @@ function Main() {
   }
 
   const selectedStory = (storySelected) => {
-    console.log("Called selectedStory with value: " + storySelected);
     setStoryDisplayed(storySelected);
   }
 
