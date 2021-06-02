@@ -5,7 +5,7 @@ import Details from './Details';
 import Error from "./Error";
 import LoadingComponent from "./LoadingComponent";
 
-function App({ searchResult }) {
+function App({ searchResult, selectedStory }) {
   const [currentStory, setCurrentStory] = useState(null);
   const [isError, setisError] = useState(false);
   const [isLoading, setisLoading] = useState(false)
@@ -22,6 +22,7 @@ function App({ searchResult }) {
   });
 
   const clickedStoryOrComment = (selectedItem, isStory) => {
+    selectedStory(true);
     setisError(false);
     setisLoading(true);
     if (isStory) {
@@ -82,6 +83,7 @@ function App({ searchResult }) {
 
   const clickedBackButton = () => {
     setCurrentStory(null);
+    selectedStory(false);
   }
 
   if(isLoading) {

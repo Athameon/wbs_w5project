@@ -56,7 +56,7 @@ const Details = (props) => {
           <p>This story has no comments.</p>
         ) : (
           searchResult.hits.map(comment => {
-            console.log("comment: ", comment);
+            // console.log("comment: ", comment);
             return <div key={comment.objectID}> 
                 <p>{comment.comment_text}</p> 
                 <p>
